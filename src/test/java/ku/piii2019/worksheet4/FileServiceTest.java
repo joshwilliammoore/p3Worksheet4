@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Disabled;
  *
  * @author James
  */
-@Disabled
+//@Disabled
 public class FileServiceTest {
     
     public FileServiceTest() {
