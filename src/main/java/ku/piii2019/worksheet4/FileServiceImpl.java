@@ -17,6 +17,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -87,12 +88,13 @@ public class FileServiceImpl implements FileService {
         String rootFolder = "test-music-files";
         MediaItem m = new MediaItem();
             
-        Set<Set<MediaItem>> result = new HashSet<>();
-        Set<MediaItem> dups1 = new HashSet<>();
-        Set<MediaItem> dups2 = new HashSet<>();
-        Set<String> uniqueFiles = new HashSet<>();
-        Set<String> dupeFiles = new HashSet<>();
-        Set<String> temp = new HashSet<>();
+        Set<Set<MediaItem>> result = new LinkedHashSet<>();
+        Set<MediaItem> dups1 = new LinkedHashSet<>();
+        Set<MediaItem> dups2 = new LinkedHashSet<>();
+        Set<String> uniqueFiles = new LinkedHashSet<>();
+        Set<String> dupeFiles = new LinkedHashSet<>();
+        Set<String> noMeansNo = new LinkedHashSet<>();
+        Set<String> fuster = new LinkedHashSet<>();
         
         for(MediaItem item : allMediaItems){
             Path p = Paths.get(item.getAbsolutePath());
@@ -110,8 +112,11 @@ public class FileServiceImpl implements FileService {
             String filename = p.getFileName().toString();
             
             if(dupeFiles.contains(filename)){
-                if(!temp.contains(filename)){
-                    temp.add(filename);
+                if(noMeansNo.isEmpty()){
+                    noMeansNo.add(filename);
+                    dups1.add(item);
+                }
+                if(!noMeansNo.contains(filename)){
                     dups2.add(item);
                 }else{
                     dups1.add(item);
