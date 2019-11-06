@@ -85,16 +85,13 @@ public class FileServiceImpl implements FileService {
     @Override
     public Set<Set<MediaItem>> getDuplicates(Set<MediaItem> allMediaItems) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        String rootFolder = "test-music-files";
-        MediaItem m = new MediaItem();
             
         Set<Set<MediaItem>> result = new LinkedHashSet<>();
         Set<MediaItem> dups1 = new LinkedHashSet<>();
         Set<MediaItem> dups2 = new LinkedHashSet<>();
         Set<String> uniqueFiles = new LinkedHashSet<>();
         Set<String> dupeFiles = new LinkedHashSet<>();
-        Set<String> noMeansNo = new LinkedHashSet<>();
-        Set<String> fuster = new LinkedHashSet<>();
+        Set<String> temp = new LinkedHashSet<>();
         
         for(MediaItem item : allMediaItems){
             Path p = Paths.get(item.getAbsolutePath());
@@ -112,70 +109,17 @@ public class FileServiceImpl implements FileService {
             String filename = p.getFileName().toString();
             
             if(dupeFiles.contains(filename)){
-                if(noMeansNo.isEmpty()){
-                    noMeansNo.add(filename);
+                if(temp.isEmpty()){
+                    temp.add(filename);
                     dups1.add(item);
                 }
-                if(!noMeansNo.contains(filename)){
+                if(!temp.contains(filename)){
                     dups2.add(item);
                 }else{
                     dups1.add(item);
                 }
             }
         }
-        
-        /*for(MediaItem item : allMediaItems){
-            Path p = Paths.get(item.getAbsolutePath());
-            String filename = p.getFileName().toString();
-            
-            
-            
-            if(!temp.contains(filename)){
-                temp.add(filename);
-                uniqueFiles.add(item.getAbsolutePath());
-            }else{
-                if(!temp2.contains(filename)){
-                    temp2.add(filename);
-                    dups1.add(item);
-                }else{
-                    dups2.add(item);
-                }
-            }
-            
-        }*/
-        /*for(String i : uniqueFiles){
-            m.setAbsolutePath(i);
-            Path p = Paths.get(m.getAbsolutePath());
-            String n = p.getFileName().toString();
-                if(!dups1.toString().contains(i)&&dups1.toString().contains(n)){
-                    dups1.add(m);
-                }
-                if(!dups2.toString().contains(i)&&dups2.toString().contains(n)){
-                    dups2.add(m);
-                }
-            }*/
-        
-        /*Set<Set<MediaItem>> result = new HashSet<>();
-        Set<MediaItem> dups1 = new HashSet<>();
-        Set<MediaItem> dups2 = new HashSet<>();
-        Set<String> temp = new HashSet<>();
-        
-        for(MediaItem m : allMediaItems){
-            Path p = Paths.get(m.getAbsolutePath());
-            String filename = p.getFileName().toString();
-            temp.add(filename);
-        }
-        System.out.println(temp);
-        
-        for(String s : temp){
-            if(!s.contains(filename)){
-                
-            }
-        }*/
-        
-        System.out.println("Dups1: "+dups1);
-        System.out.println("Dups2: "+dups2);
-        System.out.println("uniqueFiles: "+uniqueFiles);
         
         result.add(dups1);
         result.add(dups2);
