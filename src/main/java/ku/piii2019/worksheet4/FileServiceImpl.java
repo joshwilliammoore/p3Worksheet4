@@ -128,7 +128,23 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public Set<MediaItem> getItemsToRemove(Set<Set<MediaItem>> duplicates) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Set<MediaItem> dupes = new LinkedHashSet(duplicates);
+        Set<String> temp = new LinkedHashSet();
+        Set<MediaItem> result = new LinkedHashSet();
+        
+        for(MediaItem item : dupes){
+            Path p = Paths.get(item.getAbsolutePath());
+            String filename = p.getFileName().toString();
+            
+            if(!temp.contains(filename)){
+                temp.add(filename);
+            }else{
+                result.add(item);
+            }
+        }
+        System.out.println("Dupes: "+dupes);
+        return result;
     }
 
     @Override
